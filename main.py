@@ -94,7 +94,7 @@ def parse_args(args):
             help='manual epoch number (useful on restarts)')
   parser.add_argument('--val_steps_per_epoch', default=-1, type=int, metavar='N',
             help='number of validation steps per epoch')
-  parser.add_argument('-b', '--batch-size', default=200, type=int,
+  parser.add_argument('-b', '--batch-size', default=20, type=int,
             metavar='N',
             help='mini-batch size (default: 200), this is the total '
                'batch size of all GPUs on the current node when '
@@ -112,7 +112,7 @@ def parse_args(args):
                       help='number of gradient accumulation steps')
   parser.add_argument('--grad-clip', default=1.0, type=float, help='gradient clipping amount')
 
-  parser.add_argument('--precision', default='bf16', type=str, choices=['fp32', 'fp16', 'bf16'],
+  parser.add_argument('--precision', default='fp32', type=str, choices=['fp32', 'fp16', 'bf16'],
                       help="What precision to train in.")
   parser.add_argument('--cap-loss-scale', type=float, default=1.0, help="Scale on captioning loss.")
   parser.add_argument('--ret-loss-scale', type=float, default=1.0, help="Scale on retrieval loss.")
