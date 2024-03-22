@@ -14,6 +14,7 @@ from PIL import Image
 import torch
 from tqdm import tqdm
 
+sys.path.append('/content/gill-mth058/gill')
 from gill import models
 
 
