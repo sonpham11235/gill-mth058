@@ -554,10 +554,10 @@ class GILL(nn.Module):
       print('Loading decision model...')
       self.decision_model = nn.Sequential(*[
           nn.Dropout(0.5),
-          nn.Linear(4096, 2),
+          nn.Linear(768, 2),
       ])
       mlp_checkpoint = torch.load(decision_model_path)
-      self.decision_model.load_state_dict(mlp_checkpoint['state_dict'], strict=True)
+      self.decision_model.load_state_dict(mlp_checkpoint['state_dict'], strict=False)
       self.decision_model.eval()
 
   def __call__(self, images: Tensor, tgt_tokens: Optional[Tensor] = None, caption_len: Optional[Tensor] = None,
@@ -695,7 +695,7 @@ class GILL(nn.Module):
             # Make decision with MLP.
             if self.decision_model is not None:
               decision_emb = raw_emb[:, 0, :]  # (1, 4096)
-              assert decision_emb.shape[1] == 4096, decision_emb.shape
+              assert decision_emb.shape[1] == 768, decision_emb.shape
               decision_logits = self.decision_model(decision_emb)
               probs = decision_logits.softmax(dim=-1).cpu().float().numpy().tolist()
               image_outputs['decision'] = [self.idx2dec[decision_logits.argmax().item()]] + probs
